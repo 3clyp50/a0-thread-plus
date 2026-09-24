@@ -1,0 +1,7 @@
+show_last_activity: true
+show_new_activity: true
+show_status: true
+show_project: false
+show_agent_profile: false
+show_created: false
+time_style: relative

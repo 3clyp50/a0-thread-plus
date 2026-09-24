@@ -1,0 +1,4 @@
+config.json
+.toggle-*
+__pycache__/
+*.pyc

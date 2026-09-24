@@ -1,0 +1,83 @@
+<html>
+<head>
+  <script type="module" src="/plugins/thread_plus/webui/thread-plus-store.js"></script>
+</head>
+<body>
+  <div x-data>
+    <template x-if="$store.threadPlus">
+      <span hidden
+        x-init="$store.threadPlus.init()"
+        x-effect="$store.threadPlus.trackSeen($store.chats.contexts, $store.chats.selected)"
+        x-destroy="$store.threadPlus.cleanup()"></span>
+    </template>
+  </div>
+  <style>
+    #chats-section .thread-plus-row { margin-block: 2px; }
+    #chats-section .thread-plus-row .chat-list-button {
+      display: grid;
+      grid-template-columns: 0.5em minmax(0, 1fr) auto;
+      column-gap: 0.5em;
+      row-gap: 5px;
+      align-content: center;
+    }
+    #chats-section .thread-plus-row .chat-list-button > .project-color-ball {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: center;
+    }
+    #chats-section .thread-plus-row .chat-list-button > .chat-name {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    #chats-section .thread-plus-row .chat-list-button > .pin-to-top-indicator {
+      grid-column: 3;
+      grid-row: 1;
+      align-self: center;
+    }
+    #chats-section .thread-plus-row .thread-plus-meta {
+      grid-column: 2 / -1;
+      grid-row: 2;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      font-size: 0.68rem;
+      line-height: 1.25;
+      color: var(--color-text-muted);
+    }
+    #chats-section .thread-plus-leading {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+      overflow: hidden;
+    }
+    #chats-section .thread-plus-leading-icon,
+    #chats-section .thread-plus-time x-icon {
+      flex-shrink: 0;
+      font-size: 0.85em;
+      opacity: 0.7;
+    }
+    #chats-section .thread-plus-leading-text {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    #chats-section .thread-plus-new {
+      flex-shrink: 0;
+      color: #ffd256;
+      font-weight: 600;
+    }
+    #chats-section .thread-plus-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2em;
+      flex-shrink: 0;
+      margin-left: auto;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+  </style>
+</body>
+</html>

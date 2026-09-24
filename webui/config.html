@@ -1,0 +1,47 @@
+<html>
+<head><title>Thread+ Settings</title></head>
+<body>
+  <div x-data>
+    <template x-if="$store.threadPlus">
+      <div x-destroy="$store.threadPlus.loadConfig()">
+        <div class="section-title">Sidebar details</div>
+        <div class="section-description">Choose what appears beneath each chat title. Hover over a shortened row to see the full details.</div>
+        <div class="thread-plus-settings">
+          <div class="thread-plus-setting"><span>Last activity</span><label class="toggle"><input type="checkbox" x-model="config.show_last_activity" aria-label="Show last activity"><span class="toggler"></span></label></div>
+          <div class="thread-plus-setting"><span>New activity since last viewed</span><label class="toggle"><input type="checkbox" x-model="config.show_new_activity" aria-label="Show new activity"><span class="toggler"></span></label></div>
+          <div class="thread-plus-setting"><span>Working or paused state</span><label class="toggle"><input type="checkbox" x-model="config.show_status" aria-label="Show working or paused state"><span class="toggler"></span></label></div>
+          <div class="thread-plus-setting"><span>Project name</span><label class="toggle"><input type="checkbox" x-model="config.show_project" aria-label="Show project name"><span class="toggler"></span></label></div>
+          <div class="thread-plus-setting"><span>Agent profile</span><label class="toggle"><input type="checkbox" x-model="config.show_agent_profile" aria-label="Show agent profile"><span class="toggler"></span></label></div>
+          <div class="thread-plus-setting"><span>Creation date</span><label class="toggle"><input type="checkbox" x-model="config.show_created" aria-label="Show creation date"><span class="toggler"></span></label></div>
+          <label class="thread-plus-time-style">Time display
+            <select x-model="config.time_style">
+              <option value="relative">Relative</option>
+              <option value="date">Calendar date</option>
+            </select>
+          </label>
+        </div>
+        <div class="section-description">New activity is tracked in this browser. Opening a chat marks its current activity as seen.</div>
+      </div>
+    </template>
+  </div>
+  <style>
+    .thread-plus-settings { margin: var(--spacing-md) 0; }
+    .thread-plus-setting, .thread-plus-time-style {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-md);
+      min-height: 3rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .thread-plus-setting > span { min-width: 0; }
+    .thread-plus-setting .toggle { flex: 0 0 44px; width: 44px; height: 26px; }
+    .thread-plus-setting .toggler { border-radius: 26px; transition-duration: 0.18s; }
+    .thread-plus-setting .toggler:before { width: 18px; height: 18px; transition-duration: 0.18s; }
+    .thread-plus-setting input:checked + .toggler:before { transform: translateX(18px); }
+    .thread-plus-setting input:focus-visible + .toggler { outline: 2px solid var(--color-text); outline-offset: 2px; }
+    .thread-plus-time-style { border: 0; margin-top: var(--spacing-sm); }
+    .thread-plus-time-style select { width: min(12rem, 55%); }
+  </style>
+</body>
+</html>

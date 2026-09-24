@@ -1,0 +1,21 @@
+# Thread+
+
+Thread+ adds a compact second line beneath chat titles in Agent Zero's sidebar. It works with the flat chat list, Sidebar Folders, and nested chats. The plugin uses existing chat snapshot fields and does not fetch chat histories or call an external service.
+
+![Thread+ sidebar with sample chats](screenshots/sidebar.webp)
+
+## Install and configure
+
+Install `https://github.com/3clyp50/a0-thread-plus` from Agent Zero's Plugin Hub, or place this repository at `usr/plugins/thread_plus`. Enable **Thread+**, reload the WebUI, then open its **Settings** page. Choose which fields to show and save.
+
+Available fields: last activity, new activity, working/paused state, project, agent profile, and creation date. Last activity can be relative or a calendar date. Only last activity and active state appear by default. New activity appears when a chat changes after you last viewed it; the baseline is stored in this browser's `localStorage`, so it is not synchronized across devices or browsers.
+
+Context and status appear on the left of the detail line; last activity stays on the right. The full date and selected details are available in the row tooltip. If the sidebar is narrow, the left detail text truncates rather than pushing the time or action buttons off screen. Disabling or removing the plugin restores the original one-line rows after a page reload. There are no dependencies, setup hooks, external accounts, or uninstall side effects.
+
+## Why these fields
+
+DeepAPI research found repeated demand for recency, project context, and visible active or unread state. An [Open WebUI issue](https://github.com/open-webui/open-webui/issues/26451) specifically distinguishes last activity from creation time. [Slack's unread view](https://slack.com/help/articles/226410907-View-all-your-unread-messages) uses concise previews and unread cues; [Slack's design account](https://slack.design/articles/threads-in-slack-a-long-design-journey-part-2-of-2/) describes testing thread navigation. Thread+ includes only fields already available in Agent Zero's sidebar snapshot, keeping the list fast and the plugin self-contained. Conversation summaries, model usage, and token costs need additional data sources, so this version does not claim to show them.
+
+## Check
+
+Run `node tests/test_frontend.mjs` from this repository root. The source is a standalone Agent Zero plugin: `plugin.yaml`, `README.md`, and `LICENSE` live at the repository root.
