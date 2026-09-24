@@ -12,29 +12,29 @@
     </template>
   </div>
   <style>
-    #chats-section .thread-plus-row { margin-block: 2px; }
-    #chats-section .thread-plus-row .chat-list-button {
+    #chats-section .chat-list-button.thread-plus-row {
+      margin-block: 2px;
       display: grid;
       grid-template-columns: 0.5em minmax(0, 1fr) auto;
       column-gap: 0.5em;
       row-gap: 5px;
       align-content: center;
     }
-    #chats-section .thread-plus-row .chat-list-button > .project-color-ball {
+    #chats-section .chat-list-button.thread-plus-row > .project-color-ball {
       grid-column: 1;
       grid-row: 1;
       align-self: center;
     }
-    #chats-section .thread-plus-row .chat-list-button > .chat-name {
+    #chats-section .chat-list-button.thread-plus-row > .chat-name {
       grid-column: 2;
       grid-row: 1;
     }
-    #chats-section .thread-plus-row .chat-list-button > .pin-to-top-indicator {
+    #chats-section .chat-list-button.thread-plus-row > .pin-to-top-indicator {
       grid-column: 3;
       grid-row: 1;
       align-self: center;
     }
-    #chats-section .thread-plus-row .thread-plus-meta {
+    #chats-section .chat-list-button.thread-plus-row > .thread-plus-meta {
       grid-column: 2 / -1;
       grid-row: 2;
       min-width: 0;

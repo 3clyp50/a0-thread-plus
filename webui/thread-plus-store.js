@@ -50,7 +50,7 @@ export const store = createStore("threadPlus", {
     clearInterval(this.clock);
     this.clock = null;
     document.querySelectorAll("#chats-section .thread-plus-meta").forEach((node) => node.remove());
-    document.querySelectorAll("#chats-section .thread-plus-row").forEach((node) => node.classList.remove("thread-plus-row"));
+    document.querySelectorAll("#chats-section .chat-list-button.thread-plus-row").forEach((node) => node.classList.remove("thread-plus-row"));
   },
 
   async loadConfig() {
@@ -75,6 +75,7 @@ export const store = createStore("threadPlus", {
   },
 
   decorate(row) {
+    row.classList.add("thread-plus-row");
     if (row.querySelector(":scope > .thread-plus-meta")) return;
     const meta = document.createElement("span");
     meta.className = "thread-plus-meta";
@@ -120,7 +121,6 @@ export const store = createStore("threadPlus", {
     meta.append(activity);
 
     row.append(meta);
-    row.closest(".chat-container")?.classList.add("thread-plus-row");
   },
 
   trackSeen(contexts, selectedId) {
