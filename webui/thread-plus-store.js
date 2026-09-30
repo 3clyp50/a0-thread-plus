@@ -187,7 +187,6 @@ export const store = createStore("threadPlus", {
     return [
       this.newActivity(context) ? "New activity since last viewed" : "",
       this.leadingDetails(context),
-      this.activityLabel(context),
       activity ? `Last activity: ${new Date(activity).toLocaleString()}` : "",
       created ? `Created: ${new Date(created).toLocaleString()}` : "",
     ].filter(Boolean).join("\n");

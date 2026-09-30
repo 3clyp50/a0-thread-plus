@@ -8,9 +8,13 @@ Thread+ adds a compact second line beneath chat titles in Agent Zero's sidebar. 
 
 Enable **Thread+**, reload the WebUI, then open its **Settings** page. Choose which fields to show and save.
 
+**Save** persists these preferences globally in the plugin's `config.json`, including across page reloads. **Cancel** discards unsaved changes.
+
 Available fields: last activity, new activity, working/paused state, project, agent profile, and creation date. Last activity can be relative or a calendar date. Only last activity and active state appear by default. New activity appears when a chat changes after you last viewed it; the baseline is stored in this browser's `localStorage`, so it is not synchronized across devices or browsers.
 
-Context and status appear on the left of the detail line; last activity stays on the right. The full date and selected details are available in the row tooltip. If the sidebar is narrow, the left detail text truncates rather than pushing the time or action buttons off screen. Disabling or removing the plugin restores the original one-line rows after a page reload. There are no dependencies, setup hooks, external accounts, or uninstall side effects.
+Context and status appear on the left of the detail line; last activity stays on the right. The tooltip shows the full activity timestamp without repeating the relative label, plus creation time and selected details. If the sidebar is narrow, the left detail text truncates rather than pushing the time or action buttons off screen. Disabling or removing the plugin restores the original one-line rows after a page reload. There are no dependencies, setup hooks, external accounts, or uninstall side effects.
+
+Activity and Working state come from Agent Zero's context snapshots. If core supplies a stale timestamp or reports an executing subagent as idle, Thread+ displays those values; this plugin does not infer execution state or repair saved chat timestamps.
 
 ## Why these fields
 
@@ -18,4 +22,4 @@ Research found repeated demand for recency, project context, and visible active 
 
 ## Check
 
-Run `node tests/test_frontend.mjs` from this repository root. The source is a standalone Agent Zero plugin: `plugin.yaml`, `README.md`, and `LICENSE` live at the repository root.
+Run `node tests/test_frontend.mjs` from this repository root. Checks cover time formatting, new activity, loading saved visibility preferences, context updates, and tooltip timestamps. The source is a standalone Agent Zero plugin: `plugin.yaml`, `README.md`, and `LICENSE` live at the repository root.
