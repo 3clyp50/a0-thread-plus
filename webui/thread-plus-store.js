@@ -89,11 +89,21 @@ export const store = createStore("threadPlus", {
     leading.className = "thread-plus-leading";
     leading.setAttribute("x-show", "$store.threadPlus.hasLeading(context)");
 
-    const fresh = document.createElement("span");
+    const fresh = document.createElement("x-icon");
     fresh.className = "thread-plus-new";
-    fresh.textContent = "New";
+    fresh.setAttribute("name", "mark_chat_unread");
+    fresh.setAttribute("aria-hidden", "true");
+    fresh.setAttribute("title", "New activity since last viewed");
     fresh.setAttribute("x-show", "$store.threadPlus.newActivity(context)");
     leading.append(fresh);
+
+    const status = document.createElement("x-icon");
+    status.className = "thread-plus-status";
+    status.setAttribute("aria-hidden", "true");
+    status.setAttribute("x-show", "$store.threadPlus.statusIcon(context)");
+    status.setAttribute(":name", "$store.threadPlus.statusIcon(context)");
+    status.setAttribute(":title", "$store.threadPlus.statusLabel(context)");
+    leading.append(status);
 
     const icon = document.createElement("x-icon");
     icon.className = "thread-plus-leading-icon";
@@ -153,20 +163,25 @@ export const store = createStore("threadPlus", {
   leadingDetails(context) {
     if (!context) return "";
     const parts = [];
-    if (this.config.show_status && context.paused) parts.push("Paused");
-    else if (this.config.show_status && context.running) parts.push("Working");
     if (this.config.show_project && context.project?.name) parts.push(context.project.title || context.project.name);
     if (this.config.show_agent_profile && context.agent_profile) {
       parts.push(context.agent_profile_label || context.agent_profile);
     }
-    if (this.config.show_created && context.created_at) parts.push(`Created ${shortDate(context.created_at, this.now)}`);
+    if (this.config.show_created && context.created_at) parts.push(shortDate(context.created_at, this.now));
     return parts.filter(Boolean).join(" · ");
+  },
+
+  statusLabel(context) {
+    if (!this.config.show_status || !context) return "";
+    return context.paused ? "Paused" : context.running ? "Working" : "";
+  },
+
+  statusIcon(context) {
+    return { Paused: "pause_circle", Working: "progress_activity" }[this.statusLabel(context)] || "";
   },
 
   leadingIcon(context) {
     if (!context) return "";
-    if (this.config.show_status && context.paused) return "pause_circle";
-    if (this.config.show_status && context.running) return "progress_activity";
     if (this.config.show_project && context.project?.name) return "folder";
     if (this.config.show_agent_profile && context.agent_profile) return "person";
     if (this.config.show_created && context.created_at) return "calendar_today";
@@ -174,7 +189,7 @@ export const store = createStore("threadPlus", {
   },
 
   hasLeading(context) {
-    return this.newActivity(context) || Boolean(this.leadingDetails(context));
+    return this.newActivity(context) || Boolean(this.statusIcon(context) || this.leadingDetails(context));
   },
 
   hasDetails(context) {
@@ -186,7 +201,9 @@ export const store = createStore("threadPlus", {
     const created = timestamp(context?.created_at);
     return [
       this.newActivity(context) ? "New activity since last viewed" : "",
-      this.leadingDetails(context),
+      this.statusLabel(context),
+      this.config.show_project && context?.project?.name ? `Project: ${context.project.title || context.project.name}` : "",
+      this.config.show_agent_profile && context?.agent_profile ? `Agent: ${context.agent_profile_label || context.agent_profile}` : "",
       activity ? `Last activity: ${new Date(activity).toLocaleString()}` : "",
       created ? `Created: ${new Date(created).toLocaleString()}` : "",
     ].filter(Boolean).join("\n");

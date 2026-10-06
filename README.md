@@ -10,7 +10,7 @@ Enable **Thread+**, reload the WebUI, then open its **Settings** page. Choose wh
 
 **Save** persists these preferences globally in the plugin's `config.json`, including across page reloads. **Cancel** discards unsaved changes.
 
-Available fields: last activity, new activity, working/paused state, project, agent profile, and creation date. Last activity can be relative or a calendar date. Only last activity and active state appear by default. New activity appears when a chat changes after you last viewed it; the baseline is stored in this browser's `localStorage`, so it is not synchronized across devices or browsers.
+Available fields: last activity, new activity, working/paused state, project, agent profile, and creation date. Last activity can be relative or a calendar date. Last activity, new activity, and active state appear by default. An unread-chat icon marks activity since you last viewed a chat; a progress icon means working and a pause icon means paused. Hover over each icon for its meaning. Names and dates stay readable, and the detail line has an accessible label with the full information. The activity baseline is stored in this browser's `localStorage`, so it is not synchronized across devices or browsers.
 
 Context and status appear on the left of the detail line; last activity stays on the right. The tooltip shows the full activity timestamp without repeating the relative label, plus creation time and selected details. If the sidebar is narrow, the left detail text truncates rather than pushing the time or action buttons off screen. Disabling or removing the plugin restores the original one-line rows after a page reload. There are no dependencies, setup hooks, external accounts, or uninstall side effects.
 
@@ -22,4 +22,4 @@ Research found repeated demand for recency, project context, and visible active 
 
 ## Check
 
-Run `node tests/test_frontend.mjs` from this repository root. Checks cover time formatting, new activity, loading saved visibility preferences, context updates, and tooltip timestamps. The source is a standalone Agent Zero plugin: `plugin.yaml`, `README.md`, and `LICENSE` live at the repository root.
+Run `node tests/test_frontend.mjs` from this repository root. Checks cover time formatting, new activity, icon rendering, loading saved visibility preferences, context updates, and tooltip timestamps. The source is a standalone Agent Zero plugin: `plugin.yaml`, `README.md`, and `LICENSE` live at the repository root.

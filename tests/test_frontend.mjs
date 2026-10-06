@@ -28,6 +28,11 @@ const store = runInNewContext(`${source}\nstore;`, {
     return { ok: true, data: JSON.parse(JSON.stringify(saved)) };
   },
   toastFrontendError: (message) => { throw new Error(message); },
+  document: { createElement: (tag) => ({
+    tag, attributes: {}, children: [],
+    setAttribute(name, value) { this.attributes[name] = value; },
+    append(child) { this.children.push(child); },
+  }) },
   chats: { selected: "a" },
   hasNewActivity, relativeTime, shortDate, timestamp,
 });
@@ -55,8 +60,37 @@ context.last_message = "2026-09-24T11:59:00Z";
 assert.equal(store.activityLabel(context), "1m ago");
 assert.notEqual(store.tooltip(context), tooltip.join("\n"));
 store.config.show_status = true;
-assert.equal(store.leadingDetails(context), "Working · demo");
-context.running = false;
 assert.equal(store.leadingDetails(context), "demo");
+assert.equal(store.statusIcon(context), "progress_activity");
+assert.ok(store.tooltip(context).split("\n").includes("Working"));
+assert.equal(store.leadingIcon(context), "folder", "Status must not replace the context icon");
+context.paused = true;
+assert.equal(store.statusIcon(context), "pause_circle", "Paused takes priority over running");
+assert.ok(store.tooltip(context).split("\n").includes("Paused"));
+store.config.show_status = false;
+assert.equal(store.statusIcon(context), "");
+assert.ok(!store.tooltip(context).split("\n").includes("Paused"));
+store.config.show_status = true;
+store.config.show_project = false;
+store.config.show_last_activity = false;
+assert.equal(store.leadingDetails(context), "");
+assert.equal(store.hasDetails(context), true, "An icon-only state must keep its row visible");
+context.paused = false;
+context.running = false;
+assert.equal(store.statusIcon(context), "");
+assert.equal(store.hasDetails(context), false);
+store.config.show_created = true;
+assert.equal(store.leadingIcon(context), "calendar_today");
+assert.equal(store.leadingDetails(context), shortDate(context.created_at, now));
+
+const row = { classList: { add() {} }, querySelector() { return null; }, append(meta) { this.meta = meta; } };
+store.decorate(row);
+const [fresh, status] = row.meta.children[0].children;
+assert.equal(fresh.tag, "x-icon");
+assert.equal(fresh.attributes.name, "mark_chat_unread");
+assert.equal(fresh.attributes.title, "New activity since last viewed");
+assert.equal(fresh.attributes["aria-hidden"], "true");
+assert.equal(status.attributes[":title"], "$store.threadPlus.statusLabel(context)");
+assert.equal(row.meta.attributes[":aria-label"], "$store.threadPlus.tooltip(context)");
 
 console.log("Thread+ frontend checks passed");
