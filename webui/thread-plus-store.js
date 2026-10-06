@@ -93,7 +93,6 @@ export const store = createStore("threadPlus", {
     fresh.className = "thread-plus-new";
     fresh.setAttribute("name", "mark_chat_unread");
     fresh.setAttribute("aria-hidden", "true");
-    fresh.setAttribute("title", "New activity since last viewed");
     fresh.setAttribute("x-show", "$store.threadPlus.newActivity(context)");
     leading.append(fresh);
 
@@ -102,7 +101,6 @@ export const store = createStore("threadPlus", {
     status.setAttribute("aria-hidden", "true");
     status.setAttribute("x-show", "$store.threadPlus.statusIcon(context)");
     status.setAttribute(":name", "$store.threadPlus.statusIcon(context)");
-    status.setAttribute(":title", "$store.threadPlus.statusLabel(context)");
     leading.append(status);
 
     const icon = document.createElement("x-icon");

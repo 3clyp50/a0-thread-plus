@@ -88,9 +88,13 @@ store.decorate(row);
 const [fresh, status] = row.meta.children[0].children;
 assert.equal(fresh.tag, "x-icon");
 assert.equal(fresh.attributes.name, "mark_chat_unread");
-assert.equal(fresh.attributes.title, "New activity since last viewed");
 assert.equal(fresh.attributes["aria-hidden"], "true");
-assert.equal(status.attributes[":title"], "$store.threadPlus.statusLabel(context)");
+assert.equal(status.attributes["aria-hidden"], "true");
 assert.equal(row.meta.attributes[":aria-label"], "$store.threadPlus.tooltip(context)");
+const descendants = (node) => [node, ...node.children.flatMap(descendants)];
+const tooltipOwners = descendants(row.meta).filter((node) =>
+  Object.keys(node.attributes).some((name) => ["title", ":title", "data-bs-original-title"].includes(name)));
+assert.equal(tooltipOwners.length, 1, "Nested icon tooltips must not overlap the detail line tooltip");
+assert.equal(tooltipOwners[0], row.meta);
 
 console.log("Thread+ frontend checks passed");
