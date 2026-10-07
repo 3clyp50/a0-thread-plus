@@ -49,7 +49,8 @@ export const store = createStore("threadPlus", {
     this.observer = null;
     clearInterval(this.clock);
     this.clock = null;
-    document.querySelectorAll("#chats-section .thread-plus-meta").forEach((node) => node.remove());
+    document.querySelectorAll("#chats-section .thread-plus-new, #chats-section .thread-plus-meta").forEach((node) => node.remove());
+    document.querySelectorAll("#chats-section .thread-plus-title").forEach((node) => node.replaceWith(...node.children));
     document.querySelectorAll("#chats-section .chat-list-button.thread-plus-row").forEach((node) => node.classList.remove("thread-plus-row"));
   },
 
@@ -75,8 +76,10 @@ export const store = createStore("threadPlus", {
   },
 
   decorate(row) {
-    row.classList.add("thread-plus-row");
     if (row.querySelector(":scope > .thread-plus-meta")) return;
+    const name = row.querySelector(":scope > .chat-name");
+    if (!name) return;
+    row.classList.add("thread-plus-row");
     const meta = document.createElement("span");
     meta.className = "thread-plus-meta";
     meta.setAttribute("x-cloak", "");
@@ -91,9 +94,14 @@ export const store = createStore("threadPlus", {
 
     const fresh = document.createElement("span");
     fresh.className = "thread-plus-new";
-    fresh.setAttribute("aria-hidden", "true");
+    fresh.setAttribute("role", "img");
+    fresh.setAttribute("aria-label", "New activity since last viewed");
     fresh.setAttribute("x-show", "$store.threadPlus.newActivity(context)");
-    leading.append(fresh);
+    const title = document.createElement("span");
+    title.className = "thread-plus-title";
+    const pin = name.nextElementSibling?.classList.contains("pin-to-top-indicator") ? name.nextElementSibling : null;
+    name.before(title);
+    title.append(name, ...(pin ? [pin] : []), fresh);
 
     const status = document.createElement("x-icon");
     status.className = "thread-plus-status";
@@ -186,7 +194,7 @@ export const store = createStore("threadPlus", {
   },
 
   hasLeading(context) {
-    return this.newActivity(context) || Boolean(this.statusIcon(context) || this.leadingDetails(context));
+    return Boolean(this.statusIcon(context) || this.leadingDetails(context));
   },
 
   hasDetails(context) {

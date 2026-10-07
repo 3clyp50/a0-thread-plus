@@ -25,14 +25,20 @@
       grid-row: 1;
       align-self: center;
     }
-    #chats-section .chat-list-button.thread-plus-row > .chat-name {
-      grid-column: 2;
+    #chats-section .chat-list-button.thread-plus-row > .thread-plus-title {
+      grid-column: 2 / -1;
       grid-row: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.25em;
     }
-    #chats-section .chat-list-button.thread-plus-row > .pin-to-top-indicator {
-      grid-column: 3;
-      grid-row: 1;
-      align-self: center;
+    #chats-section .thread-plus-title > .chat-name {
+      flex: 0 1 auto;
+    }
+    #chats-section .thread-plus-title > .pin-to-top-indicator {
+      order: 2;
+      margin-left: auto;
     }
     #chats-section .chat-list-button.thread-plus-row > .thread-plus-meta {
       grid-column: 2 / -1;
@@ -67,9 +73,20 @@
       font-size: 0.8125rem;
     }
     #chats-section .thread-plus-new {
-      width: 0.5rem;
-      height: 0.5rem;
+      order: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 0.4375rem;
+      height: 0.4375rem;
       flex-shrink: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--color-highlight) 35%, transparent), transparent 70%);
+    }
+    #chats-section .thread-plus-new::after {
+      content: "";
+      width: 0.125rem;
+      height: 0.125rem;
       border-radius: 50%;
       background: var(--color-highlight);
     }
