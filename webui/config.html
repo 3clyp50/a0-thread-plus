@@ -5,11 +5,11 @@
     <template x-if="$store.threadPlus">
       <div x-destroy="$store.threadPlus.loadConfig()">
         <div class="section-title">Sidebar details</div>
-        <div class="section-description">Choose what appears beneath each chat title. A highlight-coloured dot marks new activity; icons show working or paused state. Hover over the detail line for meanings, full names, and timestamps.</div>
+        <div class="section-description">Choose what appears beneath each chat title. A highlight-coloured dot marks new activity; a pause icon shows paused state. Working uses the native spinning chat dot. Hover over the detail line for meanings, full names, and timestamps.</div>
         <div class="thread-plus-settings">
           <div class="thread-plus-setting"><span>Last activity</span><label class="toggle"><input type="checkbox" x-model="config.show_last_activity" aria-label="Show last activity"><span class="toggler"></span></label></div>
           <div class="thread-plus-setting"><span>New activity since last viewed</span><label class="toggle"><input type="checkbox" x-model="config.show_new_activity" aria-label="Show new activity"><span class="toggler"></span></label></div>
-          <div class="thread-plus-setting"><span>Working or paused state</span><label class="toggle"><input type="checkbox" x-model="config.show_status" aria-label="Show working or paused state"><span class="toggler"></span></label></div>
+          <div class="thread-plus-setting"><span>Paused state</span><label class="toggle"><input type="checkbox" x-model="config.show_status" aria-label="Show paused state"><span class="toggler"></span></label></div>
           <div class="thread-plus-setting"><span>Project name</span><label class="toggle"><input type="checkbox" x-model="config.show_project" aria-label="Show project name"><span class="toggler"></span></label></div>
           <div class="thread-plus-setting"><span>Agent profile</span><label class="toggle"><input type="checkbox" x-model="config.show_agent_profile" aria-label="Show agent profile"><span class="toggler"></span></label></div>
           <div class="thread-plus-setting"><span>Creation date</span><label class="toggle"><input type="checkbox" x-model="config.show_created" aria-label="Show creation date"><span class="toggler"></span></label></div>

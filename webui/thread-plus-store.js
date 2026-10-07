@@ -174,7 +174,7 @@ export const store = createStore("threadPlus", {
   },
 
   statusIcon(context) {
-    return { Paused: "pause_circle", Working: "progress_activity" }[this.statusLabel(context)] || "";
+    return this.statusLabel(context) === "Paused" ? "pause_circle" : "";
   },
 
   leadingIcon(context) {
