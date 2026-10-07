@@ -89,9 +89,8 @@ export const store = createStore("threadPlus", {
     leading.className = "thread-plus-leading";
     leading.setAttribute("x-show", "$store.threadPlus.hasLeading(context)");
 
-    const fresh = document.createElement("x-icon");
+    const fresh = document.createElement("span");
     fresh.className = "thread-plus-new";
-    fresh.setAttribute("name", "mark_chat_unread");
     fresh.setAttribute("aria-hidden", "true");
     fresh.setAttribute("x-show", "$store.threadPlus.newActivity(context)");
     leading.append(fresh);

@@ -63,12 +63,15 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    #chats-section .thread-plus-leading .thread-plus-new,
     #chats-section .thread-plus-leading .thread-plus-status {
       font-size: 0.8125rem;
     }
     #chats-section .thread-plus-new {
-      color: var(--color-warning-text);
+      width: 0.5rem;
+      height: 0.5rem;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--color-highlight);
     }
     #chats-section .thread-plus-time {
       display: inline-flex;

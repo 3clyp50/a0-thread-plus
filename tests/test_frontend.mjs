@@ -86,8 +86,9 @@ assert.equal(store.leadingDetails(context), shortDate(context.created_at, now));
 const row = { classList: { add() {} }, querySelector() { return null; }, append(meta) { this.meta = meta; } };
 store.decorate(row);
 const [fresh, status] = row.meta.children[0].children;
-assert.equal(fresh.tag, "x-icon");
-assert.equal(fresh.attributes.name, "mark_chat_unread");
+assert.equal(fresh.tag, "span", "New activity uses a dot, not an icon");
+assert.equal(fresh.attributes.name, undefined);
+assert.equal(fresh.attributes["x-show"], "$store.threadPlus.newActivity(context)");
 assert.equal(fresh.attributes["aria-hidden"], "true");
 assert.equal(status.attributes["aria-hidden"], "true");
 assert.equal(row.meta.attributes[":aria-label"], "$store.threadPlus.tooltip(context)");
@@ -96,5 +97,8 @@ const tooltipOwners = descendants(row.meta).filter((node) =>
   Object.keys(node.attributes).some((name) => ["title", ":title", "data-bs-original-title"].includes(name)));
 assert.equal(tooltipOwners.length, 1, "Nested icon tooltips must not overlap the detail line tooltip");
 assert.equal(tooltipOwners[0], row.meta);
+const extension = readFileSync(new URL("../extensions/webui/sidebar-chats-list-end/details.html", import.meta.url), "utf8");
+assert.match(extension, /\.thread-plus-new\s*\{[^}]*border-radius:\s*50%;[^}]*background:\s*var\(--color-highlight\);/,
+  "The unread dot follows the main CSS highlight colour");
 
 console.log("Thread+ frontend checks passed");
